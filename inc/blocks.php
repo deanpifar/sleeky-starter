@@ -34,10 +34,6 @@ function wpdocs_add_new_block_category( $block_categories ) {
                 'slug'  => 'homepage-design',
                 'title' => esc_html__( 'From Homepage', 'text-domain' ),
             ],
-			[
-                'slug'  => 'about-design',
-                'title' => esc_html__( 'From About', 'text-domain' ),
-            ],
         ]
     );
 
@@ -56,13 +52,13 @@ function acf_hero_item_block() {
 	if( function_exists('acf_register_block') ) {
 		
 		acf_register_block(array(
-			'name'				=> 'hero',
-			'title'				=> __('Hero'),
-			'description'		=> __('A hero for the page.'),
-			'render_template'	=> 'template-parts/hero.php',
+			'name'				=> 'example',
+			'title'				=> __('Example'),
+			'description'		=> __('Example Block.'),
+			'render_template'	=> 'template-parts/example.php',
 			'category'			=> 'homepage-design',
 			'icon'				=> 'excerpt-view',
-			'keywords'			=> array( 'hero' ),
+			'keywords'			=> array( 'example' ),
 		));
 
        /*acf_register_block(array(
