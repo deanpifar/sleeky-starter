@@ -1,0 +1,33 @@
+/*!
+Theme Name: A Sleeky Theme
+Author: Sleeky
+Author URI: https://sleeky.co.uk
+Description: Just another Sleeky theme.
+Version: 1.0
+License: (c) Copyright of Sleeky. All Rights Reserved.
+Text Domain: sleeky
+*/
+
+@import
+  'abstracts/mixins',
+  'abstracts/variables';
+
+@import
+  'vendors/normalize',
+  'vendors/font';
+
+@import
+  'base/base';
+
+@import
+  'components/header',
+  'components/navigation',
+  'components/footer';
+
+
+.container {
+  width: 100%;
+  max-width: 1655px;
+  margin: 0 auto;
+  padding: 0 30px;
+}

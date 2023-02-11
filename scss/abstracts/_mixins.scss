@@ -1,0 +1,90 @@
+/* Mixin used to quickly and efficienly use responsive code in SCSS */
+
+@mixin respond-to($breakpointVariable, $breakpoint) {
+  $raw-query: map-get($breakpointVariable, $breakpoint);
+
+  @if $raw-query {
+    $query: if(
+      type-of($raw-query) == 'string',
+      unquote($raw-query),
+      inspect($raw-query)
+    );
+
+    @media #{$query} {
+      @content;
+    }
+  } @else {
+    @error 'No value found for `#{$breakpoint}`. '
+         + 'Please make sure it is defined in `$breakpoints` map.';
+  }
+}
+
+/* Mixin saves 3 lines of code every time we use ::before or ::after */
+
+@mixin pseudo($display: block, $pos: absolute, $content: '') {
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+/* Mixin used to make a container inside a fixed width a full-width element */
+
+@mixin full-width() {
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+}
+
+/* Mixin used to create an plus */
+
+@mixin plus($size: 15px, $thickness: 2px, $color: #000) {
+  position: relative;
+  display: inline-block;
+
+  width: $size;
+  height: $size;
+
+  &::after, &::before {
+    @include pseudo();
+
+    background-color: $color;
+    height: $thickness;
+    top: calc( 50% - ( #{$thickness} / 2));
+
+    left: 0;
+    right: 0;
+
+    opacity: 1;
+    transition: all 0.3s;
+  }
+
+  &::before {
+    width: $thickness;
+    height: auto;
+
+    top: 0;
+    bottom: 0;
+
+    left: calc( 50% - ( #{$thickness} / 2));
+    right: unset;
+  }
+}
+
+/* Mixin used to create an arrow */
+
+@mixin arrow($size: 5px, $color: #000, $direction: left) {
+  border: solid $color;
+  border-width: 0 $size $size 0;
+  display: inline-block;
+  padding: $size;
+  @if ( $direction == left ) {
+    transform: rotate(135deg);
+  } @else if ( $direction == right ) {
+    transform: rotate(-45deg);
+  } @else if ( $direction == top ) {
+    transform: rotate(-135deg);
+  } @else if ( $direction == down ) {
+    transform: rotate(45deg);
+  } @else {
+    transform: rotate(135deg);
+  }
+}
