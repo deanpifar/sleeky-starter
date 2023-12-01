@@ -12,5 +12,3 @@
         <?php echo wp_get_attachment_image( $image, 'full' ); ?>
     </div>
 </div>
-
-<?php include('block-load.php'); ?>
