@@ -7,17 +7,19 @@ Blocks Settings
 
 function include_scripts_in_backend() {
 	wp_enqueue_script( 'jquery-ui-resizable');
-	wp_enqueue_script('slick-js', get_template_directory_uri() . '/assets/js/slick.min.js', array('jquery'), null, false);
-	wp_enqueue_script('slickd-js', get_template_directory_uri() . '/assets/js/scripts.js', array('jquery', 'jquery-ui-resizable', 'slick-js'), null, false);
-}
 
+  wp_register_script( 'slickslider', get_template_directory_uri() . '/assets/js/slick.min.js', array('jquery'), '1.8.1', true );
+  wp_enqueue_script( 'slickslider' );
+
+  wp_register_script( 'sleeky', get_template_directory_uri() . '/assets/js/scripts.js', array('wp-util', 'jquery', 'slickslider'), '1.0.0', true );
+  wp_enqueue_script( 'sleeky' );
+}
 add_action('enqueue_block_editor_assets', 'include_scripts_in_backend');
 
 function include_default_styles_blocks() {
-	wp_enqueue_style( 'sleeky-block', get_template_directory_uri() . '/css/editor-styles.css');
+	wp_enqueue_style( 'sleeky-block', get_template_directory_uri() . '/assets/css/editor-styles.css');
 }
 add_action('admin_enqueue_scripts', 'include_default_styles_blocks');
-
 
 /*
 Autoload blocks
