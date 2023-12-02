@@ -6,44 +6,37 @@ Custom Logo Function / WP-AdminLogin Screen
 */
 
 function custom_logo() {
-    add_theme_support(
-        'custom-logo', array(
-
-            'flex-height' => true,
-            'flex-width' => true,
-            'header-text' => array(
-
-                'site-title',
-                'site-description'
-
-            )
-        )
-    );
+  add_theme_support(
+    'custom-logo', array(
+      'flex-height' => true,
+      'flex-width' => true,
+      'header-text' => array(
+        'site-title',
+        'site-description'
+      )
+    )
+  );
 }
 
 function custom_login_logo() {
-
-    echo '<style type="text/css">
-
+  echo '<style type="text/css">
     h1 a {
-        background-image:url("' . wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' )[0] . '") !important;
-        -webkit-background-size: contain !important;
-        background-size: contain !important;
-        height: 150px !important;
-        width: 100% !important;
-        outline: none !important;
+      background-image:url("' . wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' )[0] . '") !important;
+      -webkit-background-size: contain !important;
+      background-size: contain !important;
+      height: 150px !important;
+      width: 100% !important;
+      outline: none !important;
     }
-
     h1 a:focus {
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
     }
-    </style>';
-
+  </style>';
 }
 
 function custom_login_logo_url( $url ) {
-    return get_bloginfo( 'url' );
+  return get_bloginfo( 'url' );
 }
 
 /*
@@ -52,11 +45,11 @@ Excerpt Settings
 */
 
 function custom_excerptlength( $length ) {
-    return 20;
+  return 20;
 }
 
 function custom_excerptmore( $more ) {
-    return '&hellip;';
+  return '&hellip;';
 }
 
 /*
@@ -86,8 +79,8 @@ Custom Mime
 */
 
 function custom_mime( $mimes ) {
-    $mimes['svg'] = 'image/svg+xml';
-    return $mimes;
+  $mimes['svg'] = 'image/svg+xml';
+  return $mimes;
 }
 
 /*
@@ -96,12 +89,12 @@ Generate Thumbnail Function
 */
 
 function generate_thumbnail( $size ) {
-    if ( ! get_the_post_thumbnail() ) {
-        $thumbnail = get_field( 'default_image', 'option' )['sizes'][$size];
-    } else {
-        $thumbnail = get_the_post_thumbnail_url( get_the_ID(), $size );
-    }
-    return $thumbnail;
+  if ( ! get_the_post_thumbnail() ) {
+    $thumbnail = get_field( 'default_image', 'option' )['sizes'][$size];
+  } else {
+    $thumbnail = get_the_post_thumbnail_url( get_the_ID(), $size );
+  }
+  return $thumbnail;
 }
 
 /*
@@ -119,12 +112,20 @@ add_action( 'login_head', 'custom_login_logo_url' );
 add_theme_support( 'title-tag' );
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'automatic-feed-links' );
-add_theme_support( 'woocommerce' );
+
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+  add_theme_support( 'woocommerce' );
+}
 
 add_filter( 'excerpt_length', 'custom_excerptlength' );
 add_filter( 'excerpt_more', 'custom_excerptmore' );
 add_filter( 'upload_mimes', 'custom_mime' );
-add_filter( 'tiny_mce_plugins', 'disable_emojis_tinymce' );
+
+/*
+Remove support for Emojis
+-------------------------------------
+*/
+
 add_filter( 'wp_resource_hints', 'disable_emojis_remove_dns_prefetch', 10, 2 );
 
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
@@ -144,12 +145,12 @@ function disable_emojicons_tinymce( $plugins ) {
 }
 
 function disable_emojis_remove_dns_prefetch( $urls, $relation_type ) {
-    if ( 'dns-prefetch' == $relation_type ) {
-        $emoji_svg_url = apply_filters( 'emoji_svg_url', 'https://s.w.org/images/core/emoji/2/svg/' );
+  if ( 'dns-prefetch' == $relation_type ) {
+    $emoji_svg_url = apply_filters( 'emoji_svg_url', 'https://s.w.org/images/core/emoji/2/svg/' );
 
-        $urls = array_diff( $urls, array( $emoji_svg_url ) );
-    }
-    return $urls;
+    $urls = array_diff( $urls, array( $emoji_svg_url ) );
+  }
+  return $urls;
 }
 
 /*

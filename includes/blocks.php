@@ -5,64 +5,86 @@ Blocks Settings
 -------------------------------------
 */
 
-function ghub_child_setup() {
-	add_theme_support( 'editor-styles' );
-	add_editor_style( 'style.css' );
-}
-
-add_action( 'after_setup_theme', 'ghub_child_setup' );
-
-function my_block_plugin_editor_scripts() {
+function include_scripts_in_backend() {
 	wp_enqueue_script( 'jquery-ui-resizable');
 	wp_enqueue_script('slick-js', get_template_directory_uri() . '/assets/js/slick.min.js', array('jquery'), null, false);
 	wp_enqueue_script('slickd-js', get_template_directory_uri() . '/assets/js/scripts.js', array('jquery', 'jquery-ui-resizable', 'slick-js'), null, false);
 }
 
-add_action('enqueue_block_editor_assets', 'my_block_plugin_editor_scripts');
+add_action('enqueue_block_editor_assets', 'include_scripts_in_backend');
 
-function toast_rs_enqueue(){
-	wp_enqueue_style( 'toast_rs_style', get_template_directory_uri() . '/style.css');
+function include_default_styles_blocks() {
+	wp_enqueue_style( 'sleeky-block', get_template_directory_uri() . '/css/editor-styles.css');
 }
-add_action('admin_enqueue_scripts', 'toast_rs_enqueue');
+add_action('admin_enqueue_scripts', 'include_default_styles_blocks');
 
 
 /*
-Blocks Category Settings
+Autoload blocks
 -------------------------------------
 */ 
 
-function wpdocs_add_new_block_category( $block_categories ) {
- 
-    $new_cats = array_merge(
-        $block_categories,
-        [
-            [
-                'slug'  => 'homepage-design',
-                'title' => esc_html__( 'From Homepage', 'text-domain' ),
-            ],
-			[
-                'slug'  => 'about-design',
-                'title' => esc_html__( 'From About page', 'text-domain' ),
-            ],
-        ]
-    );
-
-    return ($new_cats);
-}
- 
-add_filter( 'block_categories_all', 'wpdocs_add_new_block_category');
-
-
-function cwp_load_blocks() {
-	register_block_type( get_template_directory() . '/blocks/example/block.json' );
-
-	$blocks = acf_get_block_types();
-
+function load_blocks() {
+	$theme  = wp_get_theme();
+	$blocks = get_blocks();
 	foreach( $blocks as $block ) {
-		if ( file_exists( get_template_directory() . '/blocks/' . $block['name'] . '/block.json' ) ) {
+		if ( file_exists( get_template_directory() . '/blocks/' . $block . '/block.json' ) ) {
+			register_block_type( get_template_directory() . '/blocks/' . $block . '/block.json', array('editor_script' => 'block-hero-script') );
+			wp_register_style( 'block-' . $block, get_template_directory_uri() . '/blocks/' . $block . '/style.css', null, $theme->get( 'Version' ) );
 
+			if ( file_exists( get_template_directory() . '/blocks/' . $block . '/init.php' ) ) {
+				include_once get_template_directory() . '/blocks/' . $block . '/init.php';
+			}
+		}
+	}
+}
+
+add_action( 'init', __NAMESPACE__ . '\load_blocks', 5 );
+
+function load_acf_field_group( $paths ) {
+	$blocks = get_blocks();
+	foreach( $blocks as $block ) {
+		$paths[] = get_template_directory() . '/blocks/' . $block;
+	}
+	return $paths;
+}
+
+add_filter( 'acf/settings/load_json', __NAMESPACE__ . '\load_acf_field_group' );
+
+function get_blocks() {
+	$theme = wp_get_theme();
+	$blocks = get_option( 'cwp_blocks' );
+	$version = get_option( 'cwp_blocks_version' );
+	if ( empty( $blocks ) || version_compare( $theme->get( 'Version' ), $version ) || ( function_exists( 'wp_get_environment_type' ) && 'development' !== wp_get_environment_type() ) ) {
+		$blocks = scandir( get_template_directory() . '/blocks/' );
+		$blocks = array_values( array_diff( $blocks, array( '..', '.', '.DS_Store', '_base-block' ) ) );
+
+		update_option( 'cwp_blocks', $blocks );
+		update_option( 'cwp_blocks_version', $theme->get( 'Version' ) );
+	}
+	return $blocks;
+}
+
+function block_categories( $categories ) {
+	$include = true;
+	foreach( $categories as $category ) {
+		if( 'custom' === $category['slug'] ) {
+			$include = false;
 		}
 	}
 
+	if( $include ) {
+		$categories = array_merge(
+			$categories,
+			[
+				[
+					'slug'  => 'custom',
+					'title' => __( 'Custom blocks' ),
+				],
+			]
+		);
+	}
+
+	return $categories;
 }
-add_action( 'init', 'cwp_load_blocks' );
+add_filter( 'block_categories_all', __NAMESPACE__ . '\block_categories' );
