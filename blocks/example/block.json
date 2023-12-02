@@ -1,12 +1,12 @@
 {
+    "$schema": "https://advancedcustomfields.com/schemas/json/main/block.json",
+    "apiVersion": 3,
     "name": "example",
     "title": "Example",
     "description": "",
-    "style": "sleeky",
-    "script": "sleeky",
+    "style": "block-example",
     "category": "theme",
     "icon": "excerpt-view",
-    "blockVersion": 2,
     "keywords": [],
     "acf": {
         "mode": "preview",
@@ -14,5 +14,8 @@
     },
     "styles": [],
     "attributes": {
+    },
+    "supports": {
+        "jsx": true
     }
 }
