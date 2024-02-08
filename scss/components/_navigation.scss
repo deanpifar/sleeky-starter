@@ -115,6 +115,28 @@ $breakpoints--navigation: (
                 font-size: 1.8rem;
                 letter-spacing: 0.05em;
                 text-decoration: none;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    display: block;
+          
+                    bottom: -10px;
+                    left: 0;
+          
+                    width: 0%;
+                    height: 1px;
+          
+                    background-color: #fff;
+          
+                    transition: all 0.3s;
+                }
+
+                  &:hover {
+                    &::after{
+                      width: 100%;
+                    }
+                  }
             }
             @include respond-to($breakpoints--navigation, 'first') {
                 display: none;
