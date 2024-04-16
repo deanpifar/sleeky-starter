@@ -1,21 +1,21 @@
 {
-    "$schema": "https://advancedcustomfields.com/schemas/json/main/block.json",
-    "apiVersion": 3,
-    "name": "hero",
-    "title": "Hero",
-    "description": "Hero block ",
-    "style": "block-hero",
-    "category": "theme",
-    "icon": "editor-justify",
-    "keywords": [],
-    "acf": {
-        "mode": "preview",
-	    "renderTemplate": "render.php"
-    },
-    "styles": [],
-    "attributes": {
-    }, 
-    "supports": {
-        "jsx": true
-    }
+  "$schema": "https://advancedcustomfields.com/schemas/json/main/block.json",
+  "apiVersion": 3,
+  "name": "hero",
+  "title": "Hero",
+  "description": "Hero block",
+  "style": "block-hero",
+  "category": "theme",
+  "icon": "editor-justify",
+  "keywords": [],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php"
+  },
+  "styles": [],
+  "attributes": {
+  }, 
+  "supports": {
+      "jsx": false
+  }
 }

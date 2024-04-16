@@ -1,7 +1,8 @@
 (function($){
 
     var initializeBlock = function( $block ) {
-        $('.hero__notifications__list').slick({
+
+        $('.hero__notifications__list').not('.slick-initialized').slick({
             dots: false,
             infinite: false,
             arrows: true,
@@ -14,11 +15,7 @@
     }
 
     $( document ).on('DOMContentLoaded', function() {
-
         initializeBlock();
-
-        console.log("testing");
-
     });
 
     if( window.acf ) {

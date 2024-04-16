@@ -27,6 +27,7 @@ $attr =  array(
     <?php if( $enableNotifications ) { ?>
     <div class="hero__notifications">
         <div class="container">
+          <?php if( $notifications) { ?>
             <div class="hero__notifications__list">
                 <?php foreach( $notifications as $notification ) { ?>
                     <div>
@@ -34,6 +35,7 @@ $attr =  array(
                     </div>
                 <?php } ?>
             </div>
+            <?php } ?>
         </div>
     </div>
     <?php } ?>

@@ -35,8 +35,8 @@ function load_blocks() {
 	$blocks = get_blocks();
 	foreach( $blocks as $block ) {
 		if ( file_exists( get_template_directory() . '/blocks/' . $block . '/block.json' ) ) {
-			register_block_type( get_template_directory() . '/blocks/' . $block . '/block.json', array('editor_script' => 'block-hero-script') );
-			wp_register_style( 'block-' . $block, get_template_directory_uri() . '/blocks/' . $block . '/style.css', null, $theme->get( 'Version' ) );
+			register_block_type( get_template_directory() . '/blocks/' . $block . '/block.json', array('style' => 'block-' . $block) );
+			wp_register_style( 'block-' . $block, get_template_directory_uri() . '/blocks/' . $block . '/style.css' );
 
 			if ( file_exists( get_template_directory() . '/blocks/' . $block . '/init.php' ) ) {
 				include_once get_template_directory() . '/blocks/' . $block . '/init.php';
@@ -44,7 +44,6 @@ function load_blocks() {
 		}
 	}
 }
-
 add_action( 'init', __NAMESPACE__ . '\load_blocks', 5 );
 
 function load_acf_field_group( $paths ) {
@@ -54,7 +53,6 @@ function load_acf_field_group( $paths ) {
 	}
 	return $paths;
 }
-
 add_filter( 'acf/settings/load_json', __NAMESPACE__ . '\load_acf_field_group' );
 
 function get_blocks() {
@@ -72,9 +70,11 @@ function get_blocks() {
 }
 
 function block_categories( $categories ) {
+
+	// Check to see if we already have a CultivateWP category
 	$include = true;
 	foreach( $categories as $category ) {
-		if( 'custom' === $category['slug'] ) {
+		if( 'blog-blocks' === $category['slug'] ) {
 			$include = false;
 		}
 	}
@@ -84,8 +84,8 @@ function block_categories( $categories ) {
 			$categories,
 			[
 				[
-					'slug'  => 'custom',
-					'title' => __( 'Custom blocks' ),
+					'slug'  => 'blog-blocks',
+					'title' => __( 'For use in Insights' ),
 				],
 			]
 		);
