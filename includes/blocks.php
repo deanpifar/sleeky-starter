@@ -84,8 +84,8 @@ function block_categories( $categories ) {
 			$categories,
 			[
 				[
-					'slug'  => 'blog-blocks',
-					'title' => __( 'For use in Insights' ),
+					'slug'  => 'custom',
+					'title' => __( 'Custom' ),
 				],
 			]
 		);
