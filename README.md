@@ -13,7 +13,7 @@
     - Readded wowjs.js file and updated to 1.3.0 ( previously 1.1.3 )
     - Added featherlight.js
 
-  -General
+  - General
     - Removed category.php, front-page.php, page.php, index.php, single.php as in many cases they are not used, and we can create them when needed, makes it easier to track active theme files.
     - Fixed an issue with block crashing due to slick slider item being removed in the back end. In the block.json, under "supports", jsx needs to be set to false.
 
