@@ -15,7 +15,11 @@
 
   - General
     - Removed category.php, front-page.php, page.php, index.php, single.php as in many cases they are not used, and we can create them when needed, makes it easier to track active theme files.
+    - Removed the functionality for comments as this is not used in most cases. To remove, comment out the code in the core.php. Under "Remove comments by default".
     - Fixed an issue with block crashing due to slick slider item being removed in the back end. In the block.json, under "supports", jsx needs to be set to false.
+
+  - Functions
+    - Added a function that estimates the read time of passed text. Usage: site_estimated_reading_time( $content ); which returns time in minutes.
 
   - Blocks
     - Blocks styles/scripts are now loaded only if the block is in use. This is important to note, as if the block contains "general" rules, they will not be loaded. For "general" stylesheet use the default style.css file. ( buttons/headings and repeated rules you want to reuse, this is also loaded in back end editor )

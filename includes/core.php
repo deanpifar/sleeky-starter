@@ -153,3 +153,40 @@ function disable_emojis_remove_dns_prefetch( $urls, $relation_type ) {
   }
   return $urls;
 }
+
+/*
+Remove comments by default
+-------------------------------------
+*/
+
+// Close comments on the front-end
+add_filter('comments_open', '__return_false', 20, 2);
+add_filter('pings_open', '__return_false', 20, 2);
+
+// Hide existing comments
+add_filter('comments_array', '__return_empty_array', 10, 2);
+
+// Remove comments page in menu
+add_action('admin_menu', function () {
+  remove_menu_page('edit-comments.php');
+});
+
+// Remove comments links from admin bar
+add_action('init', function () {
+  if (is_admin_bar_showing()) {
+      remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
+  }
+});
+
+/*
+Read Time Estimate Function
+-------------------------------------
+*/ 
+
+function site_estimated_reading_time( $content = '', $wpm = 225 ) {
+  $clean_content = strip_shortcodes( $content );
+  $clean_content = strip_tags( $clean_content );
+  $word_count = str_word_count( $clean_content );
+  $time = ceil( $word_count / $wpm );
+  return $time;
+}
