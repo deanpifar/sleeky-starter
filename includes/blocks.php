@@ -18,10 +18,12 @@ function include_scripts_in_backend() {
 add_action('enqueue_block_editor_assets', 'include_scripts_in_backend');
 
 function include_global_styles_blocks() {
-	wp_enqueue_style( 'sleeky-block', get_template_directory_uri() . '/assets/css/editor-styles.css');
+	wp_enqueue_style( 'sleeky-block', get_template_directory_uri() . '/style.css');
 }
 
 add_action('admin_enqueue_scripts', 'include_global_styles_blocks');
+
+add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 
 /*
 	Autoload blocks

@@ -12,4 +12,6 @@
 
   add_action( 'init', 'register_block_example_script' );
 
+  */
+
 ?>

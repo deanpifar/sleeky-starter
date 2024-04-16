@@ -153,18 +153,3 @@ function disable_emojis_remove_dns_prefetch( $urls, $relation_type ) {
   }
   return $urls;
 }
-
-/*
-Require authentication for all REST API requests to stop data being leaked
--------------------------------------
-*/
-
-add_filter( 'rest_authentication_errors', function( $result ) {
-	if ( ! empty( $result ) ) {
-		return $result;
-	}
-	if ( ! is_user_logged_in() ) {
-		return new WP_Error( 'rest_not_logged_in', 'Only authenticated users can access the REST API.', array( 'status' => 401 ) );
-	}
-	return $result;
-});
