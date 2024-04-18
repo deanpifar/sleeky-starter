@@ -24,10 +24,14 @@ Text Domain: sleeky
   'components/navigation',
   'components/footer';
 
+@import
+  'components/woocommerce/cart';
 
 .container {
   width: 100%;
   max-width: 1655px;
   margin: 0 auto;
   padding: 0 30px;
+
+  font-family: "PT Sans";
 }

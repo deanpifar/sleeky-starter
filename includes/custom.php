@@ -76,3 +76,46 @@ register_nav_menus( array(
 ));
 
 }
+
+/*
+WooCommerce Settings
+-------------------------------------
+*/
+
+// If you want to use the WooCommerce settings from the Sleeky Starter
+$enable_theme_woocommece_settings = true;
+
+if( $enable_theme_woocommece_settings ) {
+
+  // Disable the default WooCommerce Styles
+  add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
+
+
+  // Change the Remove text next to the assigned coupon on the cart page
+  function filter_woocommerce_cart_totals_coupon_html( $coupon_html, $coupon, $discount_amount_html ) {
+    $coupon_html = str_replace( '[Remove]', 'x', $coupon_html );
+
+    return $coupon_html;
+  }
+
+  add_filter( 'woocommerce_cart_totals_coupon_html', 'filter_woocommerce_cart_totals_coupon_html', 10, 3 );
+
+}
+
+add_action( 'wp_footer', function() {
+	
+	?><script>
+	jQuery( function( $ ) {
+		let timeout;
+		$('.woocommerce').on('change', 'input.qty', function(){
+			if ( timeout !== undefined ) {
+				clearTimeout( timeout );
+			}
+			timeout = setTimeout(function() {
+				$("[name='update_cart']").trigger("click"); // trigger cart update
+			}, 500 ); // 1 second delay, half a second (500) seems comfortable too
+		});
+	} );
+	</script><?php
+	
+} );
