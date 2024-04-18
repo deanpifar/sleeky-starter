@@ -82,7 +82,7 @@ defined( 'ABSPATH' ) || exit;
             <div class="sleekyCartTable__quantity__container"> 
           <?php
 						if ( $_product->is_sold_individually() ) {
-							$min_quantity = 1;
+							$min_quantity = 0;
 							$max_quantity = 1;
 						} else {
 							$min_quantity = 0;
@@ -119,20 +119,23 @@ defined( 'ABSPATH' ) || exit;
               function increaseQuantity(element) {
                 event.preventDefault();
 
+                let disabled = $(element).hasClass('disable');
                 let currentValue = $(element).siblings('.quantity').find('.input-text.qty.text').val();
 
-                currentValue++;
+                if (!disabled) {
+                  currentValue++;
 
-                $(element).siblings('.quantity').find('.input-text.qty.text').val(currentValue);
-                $(element).siblings('.quantity').find('.input-text.qty.text').attr('value', currentValue);
+                  $(element).siblings('.quantity').find('.input-text.qty.text').val(currentValue);
+                  $(element).siblings('.quantity').find('.input-text.qty.text').attr('value', currentValue);
 
-                $(element).siblings('.quantity').find('.input-text.qty.text').trigger("change");
+                  $(element).siblings('.quantity').find('.input-text.qty.text').trigger("change");
+                }
               }
             </script>
 
             <button class="sleekyCartTable__quantity__decrease" onClick="decreaseQuantity(this);">-</button><?php
 						echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key, $cart_item ); // PHPCS: XSS ok.
-					?><button class="sleekyCartTable__quantity__increase" onClick="increaseQuantity(this);">+</button>
+					?><button class="sleekyCartTable__quantity__increase <?php if ( $_product->is_sold_individually() ) { echo "disable"; } ?>" onClick="increaseQuantity(this);">+</button>
         </div>  
         </td>
 
@@ -148,7 +151,22 @@ defined( 'ABSPATH' ) || exit;
           ?>
           <?php do_action( 'woocommerce_after_add_to_cart_button' ); ?>
 
-            <div>x</div>
+            <div>
+            <?php
+								echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+									'woocommerce_cart_item_remove_link',
+									sprintf(
+										'<a href="%s" class="remove" aria-label="%s" data-product_id="%s" data-product_sku="%s">&times;</a>',
+										esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+										/* translators: %s is the product name */
+										esc_attr( sprintf( __( 'Remove %s from cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) ),
+										esc_attr( $product_id ),
+										esc_attr( $_product->get_sku() )
+									),
+									$cart_item_key
+								);
+							?>
+            </div>
           </td>
       
         </tr>
@@ -179,6 +197,14 @@ defined( 'ABSPATH' ) || exit;
       </tbody>
     </table>
   </form>
+  <div class="sleekyCartTable__continue">
+    <div>
+      <a class="back-to-shop" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>">Continue Shopping</a>
+    </div>
+    <div>
+      <?php do_action( 'woocommerce_proceed_to_checkout' ); ?>
+    </div>
+  </div>
   </div>
 </div>
 

@@ -734,7 +734,9 @@ main {
   margin: 0;
 }
 .sleekyCartTable__table thead td:first-child span {
+  padding-top: 3px;
   font-size: 18px;
+  font-weight: 400;
 }
 .sleekyCartTable__table tbody td {
   border-bottom: 1px solid #000;
@@ -776,15 +778,28 @@ main {
 }
 .sleekyCartTable__information__description h2 {
   margin: 0 0 0.8em 0;
+  font-weight: 500;
 }
 .sleekyCartTable__information__description h2 a {
+  position: relative;
   color: #000;
   text-decoration: none;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-.sleekyCartTable__information__description h2 a:hover {
-  color: #2f2f2f;
+.sleekyCartTable__information__description h2 a::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0%;
+  height: 1px;
+  bottom: 0;
+  background-color: #000;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.sleekyCartTable__information__description h2 a:hover::after {
+  width: 100%;
 }
 .sleekyCartTable__quantity {
   padding: 30px 100px 30px 100px;
@@ -815,6 +830,17 @@ main {
 .sleekyCartTable__quantity__increase:hover {
   color: #2bae27;
 }
+.sleekyCartTable__quantity__increase.disable {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  opacity: 0.2;
+  cursor: inherit;
+}
+.sleekyCartTable__quantity__increase.disable:hover {
+  color: #000;
+}
 .sleekyCartTable__quantity .input-text.qty.text::-webkit-outer-spin-button,
 .sleekyCartTable__quantity .input-text.qty.text::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -826,6 +852,7 @@ main {
      -moz-appearance: textfield;
           appearance: textfield;
   border: 0;
+  outline: 0;
   text-align: center;
 }
 .sleekyCartTable__price, .sleekyCartTable__subtotal {
@@ -843,6 +870,16 @@ main {
   display: block;
   bottom: 20px;
   right: 0;
+}
+.sleekyCartTable__subtotal div a {
+  color: #000;
+  font-weight: 400;
+  text-decoration: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.sleekyCartTable__subtotal div a:hover {
+  color: red;
 }
 .sleekyCartTable__coupon {
   padding: 60px 0 0 0;
@@ -916,11 +953,73 @@ main {
 .sleekyCartTable__totals .cart_totals table td[data-title=Total] strong {
   font-weight: 600;
 }
+.sleekyCartTable__continue {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 100px;
+}
+.sleekyCartTable__continue .back-to-shop {
+  position: relative;
+  padding-bottom: 5px;
+  color: #000;
+  font-size: 18px;
+  text-decoration: none;
+}
+.sleekyCartTable__continue .back-to-shop::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  background-color: #000;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.sleekyCartTable__continue .back-to-shop::after {
+  content: ">";
+  opacity: 0;
+  padding-left: 0;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.sleekyCartTable__continue .back-to-shop:hover {
+  border-bottom: 0;
+}
+.sleekyCartTable__continue .back-to-shop:hover::after {
+  opacity: 1;
+  padding-left: 10px;
+}
+.sleekyCartTable__continue .back-to-shop:hover::before {
+  opacity: 0;
+  width: 0;
+}
+.sleekyCartTable__continue .checkout-button {
+  padding: 18px 40px;
+  background-color: #000;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+}
+.sleekyCartTable__continue .checkout-button::after {
+  content: ">";
+  opacity: 0;
+  padding-left: 0px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.sleekyCartTable__continue .checkout-button:hover::after {
+  opacity: 1;
+  padding-left: 10px;
+}
 
 .container {
   width: 100%;
   max-width: 1655px;
   margin: 0 auto;
   padding: 0 30px;
-  font-family: "PT Sans";
+  font-family: "Poppins";
 }
