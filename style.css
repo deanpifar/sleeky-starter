@@ -696,6 +696,11 @@ main {
   text-align: center;
 }
 
+/* Mixin used to quickly and efficienly use responsive code in SCSS */
+/* Mixin saves 3 lines of code every time we use ::before or ::after */
+/* Mixin used to make a container inside a fixed width a full-width element */
+/* Mixin used to create an plus */
+/* Mixin used to create an arrow */
 .woocommerce button[name=update_cart],
 .woocommerce input[name=update_cart] {
   display: none;
@@ -710,7 +715,7 @@ main {
   border-spacing: 0;
 }
 .sleekyCartTable__table thead td {
-  font-size: 18px;
+  font-size: clamp(16px, 2vw, 18px);
   text-align: center;
   padding-bottom: 30px;
   border-bottom: 1px solid #000;
@@ -719,7 +724,7 @@ main {
   text-align: right;
 }
 .sleekyCartTable__table thead td:first-child {
-  font-size: 35px;
+  font-size: clamp(25px, 3vw, 30px);
   font-weight: 500;
   text-align: left;
 }
@@ -730,19 +735,16 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 45px;
+  gap: clamp(20px, 4vw, 45px);
   margin: 0;
 }
 .sleekyCartTable__table thead td:first-child span {
   padding-top: 3px;
-  font-size: 18px;
+  font-size: clamp(15px, 2vw, 18px);
   font-weight: 400;
 }
 .sleekyCartTable__table tbody td {
   border-bottom: 1px solid #000;
-}
-.sleekyCartTable__table tbody tr:last-child td {
-  border-bottom: 0;
 }
 .sleekyCartTable__information {
   display: -webkit-box;
@@ -751,11 +753,21 @@ main {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 75px;
-  padding: 30px 100px 30px 0;
+  gap: clamp(20px, 5vw, 60px);
+  padding: clamp(15px, 3vw, 30px) clamp(40px, 5vw, 100px) 30px 0;
+}
+@media (max-width: 1650px) {
+  .sleekyCartTable__information {
+    padding: clamp(15px, 2vw, 30px) 15px clamp(15px, 2vw, 30px) 0;
+  }
+}
+@media (max-width: 1350px) {
+  .sleekyCartTable__information {
+    gap: clamp(20px, 3vw, 40px);
+  }
 }
 .sleekyCartTable__information__thumbnail {
-  width: calc(35% - 75px);
+  width: clamp(100px, 13vw, 200px);
   height: auto;
   aspect-ratio: 1;
   border: 1px solid #D9D9D9;
@@ -774,10 +786,11 @@ main {
      object-fit: cover;
 }
 .sleekyCartTable__information__description {
-  width: 65%;
+  width: calc(100% - clamp(100px, 13vw, 200px));
 }
 .sleekyCartTable__information__description h2 {
   margin: 0 0 0.8em 0;
+  font-size: clamp(18px, 2vw, 25px);
   font-weight: 500;
 }
 .sleekyCartTable__information__description h2 a {
@@ -801,23 +814,38 @@ main {
 .sleekyCartTable__information__description h2 a:hover::after {
   width: 100%;
 }
+.sleekyCartTable__information__description p {
+  margin: 0 0 0.8em 0;
+  font-size: clamp(15px, 2vw, 16px);
+}
 .sleekyCartTable__quantity {
-  padding: 30px 100px 30px 100px;
-  font-size: 30px;
+  padding: clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px) clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px);
+  font-size: clamp(20px, 2vw, 25px);
   font-weight: 500;
   text-align: center;
+}
+@media (max-width: 1650px) {
+  .sleekyCartTable__quantity {
+    padding: 30px 15px 30px 15px;
+  }
 }
 .sleekyCartTable__quantity__container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .sleekyCartTable__quantity__decrease, .sleekyCartTable__quantity__increase {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  width: 40px;
-  height: 40px;
+  width: clamp(30px, 4vw, 40px);
+  height: clamp(30px, 4vw, 40px);
   background: none;
   border: none;
   -webkit-transition: all 0.3s;
@@ -851,19 +879,31 @@ main {
   -webkit-appearance: textfield;
      -moz-appearance: textfield;
           appearance: textfield;
+  width: clamp(40px, 7vw, 130px);
   border: 0;
   outline: 0;
   text-align: center;
 }
 .sleekyCartTable__price, .sleekyCartTable__subtotal {
-  padding: 30px 100px 30px 100px;
-  font-size: 30px;
+  padding: clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px) clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px);
+  font-size: clamp(20px, 2vw, 25px);
   font-weight: 500;
   text-align: center;
 }
+@media (max-width: 1650px) {
+  .sleekyCartTable__price, .sleekyCartTable__subtotal {
+    padding: 30px 15px 30px 15px;
+  }
+}
 .sleekyCartTable__subtotal {
   position: relative;
-  padding: 30px 0 30px 100px;
+  padding: 30px 0 30px clamp(40px, 5vw, 100px);
+  text-align: right;
+}
+@media (max-width: 1650px) {
+  .sleekyCartTable__subtotal {
+    padding: 30px 0 30px 15px;
+  }
 }
 .sleekyCartTable__subtotal div {
   position: absolute;
@@ -880,6 +920,14 @@ main {
 }
 .sleekyCartTable__subtotal div a:hover {
   color: red;
+}
+.sleekyCartTable__finish {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 .sleekyCartTable__coupon {
   padding: 60px 0 0 0;

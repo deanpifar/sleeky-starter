@@ -74,7 +74,7 @@ defined( 'ABSPATH' ) || exit;
               }
               ?>
               </h2>
-              <?php echo $_product->get_description(); ?>
+              <p><?php echo $_product->get_description(); ?></p>
             </div>
           </td>
 
@@ -173,8 +173,10 @@ defined( 'ABSPATH' ) || exit;
 
         <?php } ?>
       <?php } ?>
-      <tr>
-				<td colspan="1" class="actions sleekyCartTable__coupon">
+      </tbody>
+    </table>
+    <div class="sleekyCartTable__finish">
+				<div class="actions sleekyCartTable__coupon">
 
 					<?php if ( wc_coupons_enabled() ) { ?>
 						<div class="coupon">
@@ -188,14 +190,12 @@ defined( 'ABSPATH' ) || exit;
 					<?php do_action( 'woocommerce_cart_actions' ); ?>
 
 					<?php wp_nonce_field( 'woocommerce-cart', 'woocommerce-cart-nonce' ); ?>
-				</td>
-        <td colspan="4" class="sleekyCartTable__totals">
+          </div>
+        <div class="sleekyCartTable__totals">
           <?php do_action( 'woocommerce_before_cart_collaterals' ); ?>
           <?php do_action( 'woocommerce_cart_collaterals' ); ?>
-        </td>
-			</tr>
-      </tbody>
-    </table>
+        </div>
+    </div>
   </form>
   <div class="sleekyCartTable__continue">
     <div>
