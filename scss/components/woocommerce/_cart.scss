@@ -4,7 +4,8 @@
 $breakpoints--cart: (
   'first': (max-width: 1650px),
   'second': (max-width: 1350px),
-  'third': (max-width: 780px),
+  'third': (max-width: 640px),
+  'fourth': (max-width: 480px),
 );
 
 .woocommerce button[name="update_cart"],
@@ -13,7 +14,7 @@ $breakpoints--cart: (
 }
 
 .sleekyCartTable {
-  padding: 100px 0;
+  padding: clamp(40px, 6vw, 100px) 0;
 
   &__table {
     width: 100%;
@@ -21,28 +22,54 @@ $breakpoints--cart: (
     table-layout: auto;
     border-spacing: 0;
 
+    @include respond-to($breakpoints--cart, 'fourth') {
+      table-layout: fixed;
+    }
+
     thead td {
       font-size: clamp(16px, 2vw, 18px);
       text-align: center;
 
-      padding-bottom: 30px;
+      padding-bottom: clamp(15px, 2vw, 30px);
       border-bottom: 1px solid #000;
 
-      &:last-child{
+      @include respond-to($breakpoints--cart, 'fourth') {
+        width: 70px;
+      }
+
+      &:last-child {
         text-align: right;
       }
 
+
+      &:nth-child(2) {
+        @include respond-to($breakpoints--cart, 'third') {
+          display: none;
+        }
+      }
+
       &:first-child {
-        font-size: clamp(25px, 3vw, 30px);
+        font-size: clamp(24px, 3vw, 30px);
         font-weight: 500;
 
         text-align: left;
+
+        @include respond-to($breakpoints--cart, 'fourth') {
+          width: auto;
+        }
 
         p {
           display: flex;
           align-items: center;
           gap: clamp(20px, 4vw, 45px);
           margin: 0;
+
+          @include respond-to($breakpoints--cart, 'fourth') {
+            gap: 2px;
+
+            flex-direction: column;
+            align-items: flex-start;
+          }
         }
         
         span {
@@ -53,8 +80,6 @@ $breakpoints--cart: (
         }
       }
     }
-
-    tbody td { border-bottom: 1px solid #000; }
   }
 
   &__information {
@@ -66,12 +91,24 @@ $breakpoints--cart: (
 
     padding: clamp(15px, 3vw, 30px) clamp(40px, 5vw, 100px) 30px 0;
 
+    border-bottom: 1px solid #000;
+
     @include respond-to($breakpoints--cart, 'first') {
-      padding: clamp(15px, 2vw, 30px) 15px clamp(15px, 2vw, 30px) 0;
+      padding: clamp(15px, 2vw, 30px) clamp(10px, 2vw, 15px) clamp(15px, 2vw, 30px) 0;
     }
 
     @include respond-to($breakpoints--cart, 'second') {
       gap: clamp(20px, 3vw, 40px);
+    }
+
+    @include respond-to($breakpoints--cart, 'third') {
+      border-bottom: none;
+    }
+
+    @include respond-to($breakpoints--cart, 'fourth') {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
     }
 
     &__thumbnail {
@@ -97,10 +134,14 @@ $breakpoints--cart: (
     &__description {
       width: calc( 100% - clamp(100px, 13vw, 200px));
 
+      @include respond-to($breakpoints--cart, 'fourth') {
+        width: 100%;
+      }
+
       h2 {
         margin: 0 0 0.8em 0;
 
-        font-size: clamp(18px, 2vw, 25px);
+        font-size: clamp(17px, 2vw, 25px);
         font-weight: 500;
 
         a {
@@ -145,12 +186,31 @@ $breakpoints--cart: (
   &__quantity {
     padding: clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px) clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px);
 
-    font-size: clamp(20px, 2vw, 25px);
+    font-size: clamp(17px, 2vw, 25px);
     font-weight: 500;
     text-align: center;
 
+    border-bottom: 1px solid #000;
+
+    > p {
+      display: none;
+
+      font-size: 13px;
+      font-weight: 500;
+    }
+
     @include respond-to($breakpoints--cart, 'first') {
-      padding: 30px 15px 30px 15px;
+      padding: 30px clamp(10px, 2vw, 15px) 30px clamp(10px, 2vw, 15px);
+    }
+
+    @include respond-to($breakpoints--cart, 'third') {
+      display: flex;
+
+      gap: 20px;
+
+      padding: 0 clamp(10px, 2vw, 15px) clamp(10px, 2vw, 15px) 0;
+
+      > p { display: inline-block; }
     }
 
     &__container {
@@ -210,12 +270,18 @@ $breakpoints--cart: (
   &__price, &__subtotal {
     padding: clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px) clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px);
 
-    font-size: clamp(20px, 2vw, 25px);
+    font-size: clamp(17px, 2vw, 25px);
     font-weight: 500;
     text-align: center;
 
+    border-bottom: 1px solid #000;
+
     @include respond-to($breakpoints--cart, 'first') {
-      padding: 30px 15px 30px 15px;
+      padding: 30px clamp(10px, 2vw, 15px) 30px clamp(10px, 2vw, 15px);
+    }
+
+    @include respond-to($breakpoints--cart, 'third') {
+      padding-bottom: 90px;
     }
   }
 
@@ -227,14 +293,18 @@ $breakpoints--cart: (
     text-align: right;
 
     @include respond-to($breakpoints--cart, 'first') {
-      padding: 30px 0 30px 15px;
+      padding: 30px 0 30px clamp(10px, 2vw, 15px);
+    }
+
+    @include respond-to($breakpoints--cart, 'third') {
+      padding-bottom: 90px;
     }
 
     div {
       position: absolute;
       display: block;
 
-      bottom: 20px;
+      bottom: 23px;
       right: 0;
 
       a {
@@ -255,18 +325,22 @@ $breakpoints--cart: (
   &__finish {
     display: flex;
     justify-content: space-between;
+
+    @include respond-to($breakpoints--cart, 'third') {
+      flex-direction: column;
+    }
   }
 
   &__coupon {
-    padding: 60px 0 0 0;
+    padding: clamp(25px, 4vw, 60px) 0 0 0;
 
     .button {
       appearance: none;
 
-      margin-left: 50px;
-      padding: 18px 26px;
+      margin-left: clamp(10px, 3vw, 50px);
+      padding: clamp(12px, 2vw, 18px) clamp(16px, 3vw, 26px);
 
-      font-size: 18px;
+      font-size: clamp(15px, 2vw, 18px);
       font-weight: 500;
 
       background-color: #fff;
@@ -281,21 +355,30 @@ $breakpoints--cart: (
       }
     }
 
-    .coupon input {
-      color: #000;
+    .coupon {
+      display: flex;
 
-      font-size: 18px;
-      padding-bottom: 15px;
+      input {
+        width: clamp(170px, 27vw, 300px);
 
-      border: none;
-      outline: 0;
-      border-bottom: 1px solid #8E8888;
+        color: #000;
+
+        font-size: clamp(15px, 2vw, 18px);
+        padding-bottom: clamp(10px, 1.5vw, 15px);
+
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #8E8888;
+
+        @include respond-to($breakpoints--cart, 'third') {
+          width: 100%;
+        }
+      }
     }
   }
 
   &__totals {
-    padding: 60px 25px 0 0;
-
+    padding: clamp(25px, 4vw, 60px) 25px 0 0;
 
     .cart_totals {
       display: flex;
@@ -322,20 +405,20 @@ $breakpoints--cart: (
       }
   
       table {
-        border-spacing: 10px;
+        border-spacing: clamp(5px, 1vw, 10px);
         th {
-          font-size: 18px;
+          font-size: clamp(16px, 2vw, 18px);
           font-weight: 400;
         }
         td {
           position: relative;
 
-          padding-left: 50px;
+          padding-left: clamp(20px, 4vw, 50px);
 
-          font-size: 25px;
+          font-size: clamp(17px, 2vw, 25px);
 
           &[data-title="Total"] {
-            font-size: 35px;
+            font-size: clamp(22px, 2.5vw, 30px);
             strong {
               font-weight: 600;
             }
@@ -349,8 +432,20 @@ $breakpoints--cart: (
     display: flex;
 
     justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
 
-    margin-top: 100px;
+    gap: 30px;
+
+    margin-top: clamp(30px, 6vw, 100px);
+
+    @include respond-to($breakpoints--cart, 'fourth') {
+      flex-direction: column;
+
+      > div {
+        width: 100%;
+      }
+    }
 
     .back-to-shop {
       position: relative;
@@ -359,7 +454,7 @@ $breakpoints--cart: (
 
       color: #000;
 
-      font-size: 18px;
+      font-size: clamp(15px, 2vw, 18px);
 
       text-decoration: none;
 
@@ -400,14 +495,22 @@ $breakpoints--cart: (
     }
 
     .checkout-button {
-      padding: 18px 40px;
+      display: inline-block;
+
+      padding: clamp(12px, 2vw, 18px) clamp(25px, 3vw, 40px);
 
       background-color: #000;
       color: #fff;
 
-      font-size: 18px;
+      font-size: clamp(15px, 2vw, 18px);
 
       text-decoration: none;
+
+      @include respond-to($breakpoints--cart, 'fourth') {
+        width: 100%;
+
+        text-align: center;
+      }
 
       &::after {
         content: '>';
