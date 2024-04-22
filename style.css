@@ -841,7 +841,7 @@ main {
   }
 }
 .sleekyCartTable__information__description h2 {
-  margin: 0 0 0.8em 0;
+  margin: 0 0 0.6em 0;
   font-size: clamp(17px, 2vw, 25px);
   font-weight: 500;
 }
@@ -866,9 +866,30 @@ main {
 .sleekyCartTable__information__description h2 a:hover::after {
   width: 100%;
 }
-.sleekyCartTable__information__description p {
-  margin: 0 0 0.8em 0;
+.sleekyCartTable__information__description > p {
+  margin: 0 0 0.6em 0;
   font-size: clamp(15px, 2vw, 16px);
+}
+.sleekyCartTable__information__description .variation {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 7px;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.sleekyCartTable__information__description .variation div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 15px;
+}
+.sleekyCartTable__information__description .variation div dd {
+  margin-left: 3px;
+}
+.sleekyCartTable__information__description .variation div p {
+  margin: 0;
 }
 .sleekyCartTable__quantity {
   padding: clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px) clamp(15px, 2vw, 30px) clamp(40px, 5vw, 100px);
@@ -879,6 +900,7 @@ main {
 }
 .sleekyCartTable__quantity > p {
   display: none;
+  margin: 0;
   font-size: 13px;
   font-weight: 500;
 }
@@ -892,6 +914,9 @@ main {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 20px;
     padding: 0 clamp(10px, 2vw, 15px) clamp(10px, 2vw, 15px) 0;
   }
@@ -1188,6 +1213,11 @@ main {
   padding-left: 10px;
 }
 
+/* Mixin used to quickly and efficienly use responsive code in SCSS */
+/* Mixin saves 3 lines of code every time we use ::before or ::after */
+/* Mixin used to make a container inside a fixed width a full-width element */
+/* Mixin used to create an plus */
+/* Mixin used to create an arrow */
 .container {
   width: 100%;
   max-width: 1655px;

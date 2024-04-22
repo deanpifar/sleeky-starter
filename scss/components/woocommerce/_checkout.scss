@@ -1,0 +1,6 @@
+@import
+  '../../abstracts/mixins';
+
+$breakpoints--checkout: (
+  'first': (max-width: 1650px),
+);

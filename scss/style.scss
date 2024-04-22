@@ -25,7 +25,8 @@ Text Domain: sleeky
   'components/footer';
 
 @import
-  'components/woocommerce/cart';
+  'components/woocommerce/cart',
+  'components/woocommerce/checkout';
 
 .container {
   width: 100%;
